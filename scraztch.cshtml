@@ -1,0 +1,6 @@
+            @foreach(var tr in @ViewBag.user.accounts[0].transactions){
+                <tr>
+                    <td>@tr.amount.ToString("C2")</td>
+                    <td>@tr.created_at</td>
+                </tr>
+            }

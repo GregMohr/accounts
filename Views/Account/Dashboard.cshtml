@@ -1,0 +1,37 @@
+@model accounts.Models.Transaction
+@{
+    ViewData["Title"] = "Transactions";
+}
+<div class="row">
+    <h3 class="eight columns">Welcome, @ViewBag.user.first</h3>
+    <a class="three columns" style="text-align: right" href="/logout">Logout</a>
+    <p class="three columns" style="text-align: right">Current Balance: @ViewBag.user.accounts[0].balance.ToString("C2")</p>
+</div>
+<div class="row">
+    <form class="eight columns" style="height: 40px" action="createTransaction" method="post">
+        <input asp-for="amount" asp-format="{0:N2}" style="display: inline">
+        <div style="height: 40px; display: inline-block">
+            <button type="submit">Submit</button>
+            @if(ViewBag.err != null){<p style="color: red; display: inline">@ViewBag.err</p>}
+        </div>
+        <input asp-for="accountId" type="hidden" value="@ViewBag.user.accounts[0].id">
+    </form>
+</div>
+<div class="row">
+    <table class="six columns">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(var idx = @ViewBag.user.accounts[0].transactions.Count - 1; idx >= 0; idx--){
+                <tr>
+                    <td>@ViewBag.user.accounts[0].transactions[idx].amount.ToString("C2")</td>
+                    <td>@ViewBag.user.accounts[0].transactions[idx].created_at</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
